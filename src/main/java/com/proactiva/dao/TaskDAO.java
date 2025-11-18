@@ -41,13 +41,13 @@ public class TaskDAO {
         }
 
         // 2. Inserir a tarefa com o ID obtido
-        String insertSql = "INSERT INTO TASKS (TASK_ID, USER_ID, TITLE, DESCRIPTION, CATEGORY, PRIORITY, STATUS, DUE_DATE, CREATED_AT, UPDATED_AT) " +
+        String insertSql = "INSERT INTO TASKS (ID, USER_ID, TITLE, DESCRIPTION, CATEGORY, PRIORITY, STATUS, DUE_DATE, CREATED_AT, UPDATED_AT) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, SYSTIMESTAMP)";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(insertSql)) {
 
-            stmt.setLong(1, nextId); // TASK_ID
+            stmt.setLong(1, nextId); // ID
             stmt.setLong(2, task.getUserId()); // USER_ID
             stmt.setString(3, task.getTitle()); // TITLE
             stmt.setString(4, task.getDescription()); // DESCRIPTION
@@ -82,7 +82,7 @@ public class TaskDAO {
      * @throws SQLException se houver erro na operação
      */
     public Optional<Task> findById(Long id) throws SQLException {
-        String sql = "SELECT * FROM TASKS WHERE TASK_ID = ?";
+        String sql = "SELECT * FROM TASKS WHERE ID = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -185,7 +185,7 @@ public class TaskDAO {
     public Task update(Task task) throws SQLException {
         String sql = "UPDATE TASKS SET TITLE = ?, DESCRIPTION = ?, CATEGORY = ?, PRIORITY = ?, " +
                 "STATUS = ?, DUE_DATE = ?, COMPLETED_AT = ?, UPDATED_AT = SYSTIMESTAMP " +
-                "WHERE TASK_ID = ?";
+                "WHERE ID = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -228,7 +228,7 @@ public class TaskDAO {
      * @throws SQLException se houver erro na operação
      */
     public boolean delete(Long id) throws SQLException {
-        String sql = "DELETE FROM TASKS WHERE TASK_ID = ?";
+        String sql = "DELETE FROM TASKS WHERE ID = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -249,7 +249,7 @@ public class TaskDAO {
      */
     private Task mapResultSetToTask(ResultSet rs) throws SQLException {
         Task task = new Task();
-        task.setId(rs.getLong("TASK_ID"));
+        task.setId(rs.getLong("ID"));
         task.setUserId(rs.getLong("USER_ID"));
         task.setTitle(rs.getString("TITLE"));
         task.setDescription(rs.getString("DESCRIPTION"));
