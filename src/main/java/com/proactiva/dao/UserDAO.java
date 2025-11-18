@@ -68,7 +68,7 @@ public class UserDAO {
      */
     public Optional<User> findById(Long id) throws SQLException {
         // CORREÇÃO: Usando "user_id" na cláusula WHERE
-        String sql = "SELECT * FROM USERS WHERE USER_ID = ?";
+        String sql = "SELECT * FROM USERS WHERE ID = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -167,7 +167,7 @@ public class UserDAO {
     public User update(User user) throws SQLException {
         // CORREÇÃO: Usando "user_id" na cláusula WHERE
         String sql = "UPDATE USERS SET USERNAME = ?, EMAIL = ?, PASSWORD = ?, UPDATED_AT = SYSTIMESTAMP " +
-                "WHERE USER_ID = ?";
+                "WHERE ID = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -196,7 +196,7 @@ public class UserDAO {
      */
     public boolean delete(Long id) throws SQLException {
         // CORREÇÃO: Usando "user_id" na cláusula WHERE
-        String sql = "DELETE FROM USERS WHERE USER_ID = ?";
+        String sql = "DELETE FROM USERS WHERE ID = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -218,7 +218,7 @@ public class UserDAO {
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
         // CORREÇÃO: Usando "user_id" para obter o ID
-        user.setId(rs.getLong("USER_ID"));
+        user.setId(rs.getLong("ID"));
         user.setUsername(rs.getString("USERNAME"));
         user.setEmail(rs.getString("EMAIL"));
         user.setPassword(rs.getString("PASSWORD"));
